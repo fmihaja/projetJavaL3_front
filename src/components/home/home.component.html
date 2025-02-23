@@ -1,5 +1,5 @@
-<div class="h-[100vh]flex flex-col justify-start">
-    <div class="h-1/2 w-full flex flex-col items-center">
+<div class="h-[100vh] w-full flex flex-col items-center">
+    <div class="w-full flex flex-col items-center">
         <p-toolbar class="!w-full !rounded-9xl !p-2 !px-10 ">
             <ng-template #start>
                 <div class="flex items-center gap-2">
@@ -20,7 +20,9 @@
         </p-toolbar>
     </div>
     <!-- vue route -->
-    <router-outlet />
+     <div class="!w-full">
+        <router-outlet />
+     </div>
     <!-- setting nav -->
     <p-drawer header="Right Drawer" [(visible)]="settingNav" position="right">
         <app-footer/>
