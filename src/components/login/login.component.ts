@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { AutoFocusModule } from 'primeng/autofocus';
 
 @Component({
   selector: 'app-login',
   imports: [
-   ButtonModule,
+   ButtonModule,AutoFocusModule,
     InputTextModule, FloatLabelModule,
     // IconFieldModule, InputIconModule
   ],
