@@ -1,5 +1,5 @@
-<div class="h-[100vh] border-black flex flex-col justify-start">
-    <div class="h-1/2 w-full border-2 border-black flex justify-center">
+<div class="h-[100vh]flex flex-col justify-start">
+    <div class="h-1/2 w-full flex flex-col items-center">
         <p-toolbar class="!w-full !rounded-9xl !p-2 !px-10 ">
             <ng-template #start>
                 <div class="flex items-center gap-2">
@@ -82,7 +82,32 @@
             </ng-template>
         </p-toolbar>
     </div>
-    <div class="h-full  border-2 border-red-600"></div>
+    <div class=" w-full flex justify-center items-center p-10">
+        <p-button variant="text" [raised]="true" class="flex-1 !ms-20" styleClass="!w-[60%] !flex !justify-start">
+            <div class="w-full flex flex-col justify-start gap-4">
+                <div class="text-black font-semibold text-4xl me-auto">Fourniseur</div>
+                <div class="text-4xl ms-auto">
+                    20
+                </div>
+            </div>
+        </p-button>
+        <p-button variant="text" [raised]="true" class="flex-1" styleClass="!w-[60%] !flex !justify-start">
+            <div class="w-full flex flex-col justify-start gap-4 ">
+                <div class="text-black font-semibold text-4xl me-auto">Client</div>
+                <div class="text-4xl  ms-auto">
+                    10
+                </div>
+            </div>
+        </p-button>
+        <p-button variant="text" [raised]="true" class="flex-1" styleClass="!w-[60%] !flex !justify-start">
+            <div class="w-ful flex flex-col justify-start gap-4">
+                <div class="text-black font-semibold text-4xl me-auto">Marchandise</div>
+                <div class="text-4xl ms-auto">
+                    10
+                </div>
+            </div>
+        </p-button>
+    </div>
     <!-- setting nav -->
     <p-drawer header="Right Drawer" [(visible)]="settingNav" position="right">
         <p>
