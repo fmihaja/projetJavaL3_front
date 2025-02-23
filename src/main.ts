@@ -1,12 +1,13 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-// import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
-import { ApplicationConfig } from '@angular/core';
+import { appConfig } from './app/app.config';
+import { ApplicationConfig, mergeApplicationConfig } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { definePreset } from '@primeng/themes';
 
+// Définition du preset avec les couleurs souhaitées
 const MyPreset = definePreset(Aura, {
     semantic: {
         primary: {
@@ -25,18 +26,22 @@ const MyPreset = definePreset(Aura, {
     }
 });
 
-export const appConfig: ApplicationConfig = {
+export const appConfigNg: ApplicationConfig = {
     providers: [
         provideAnimationsAsync(),
         providePrimeNG({
             theme: {
                 preset: MyPreset,
                 options: {
-                    darkModeSelector: false // Désactivation du mode sombre
+                    darkModeSelector: false
                 }
             }
         })
     ]
 };
-bootstrapApplication(AppComponent, appConfig)
+
+// Exemple de fusion avec une autre configuration (si nécessaire)
+const mergedConfig = mergeApplicationConfig(appConfig, appConfigNg);
+
+bootstrapApplication(AppComponent, mergedConfig)
   .catch((err) => console.error(err));
