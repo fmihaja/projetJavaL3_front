@@ -71,7 +71,7 @@
     
             <ng-template #end>
                 <div class="flex items-center gap-2">
-                    <p-button text plain>
+                    <p-button (click)="settingNav = true" text plain>
                         <span class="p-button-icon pi pi-cog !text-2xl !text-black"></span>
                       </p-button>
                     <!-- <p-avatar
@@ -83,4 +83,12 @@
         </p-toolbar>
     </div>
     <div class="h-full  border-2 border-red-600"></div>
+    <!-- setting nav -->
+    <p-drawer header="Right Drawer" [(visible)]="settingNav" position="right">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+            et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+        </p>
+    </p-drawer>
 </div>
