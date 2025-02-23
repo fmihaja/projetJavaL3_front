@@ -3,12 +3,14 @@ import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-client',
   imports: [
     TableModule, InputTextModule,
-    IconFieldModule, InputIconModule
+    IconFieldModule, InputIconModule,
+    ButtonModule
   ],
   templateUrl: './client.component.html',
   styleUrl: './client.component.css'

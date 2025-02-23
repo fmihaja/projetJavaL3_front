@@ -8,20 +8,18 @@
         [globalFilterFields]="['name', 'category', 'code', 'quantity']"
     >
         <ng-template #caption>
-            <div class="flex">
-                <!-- <div class="p-input-icon-left"> -->
+            <div class="flex justify-between ">
+                <p-button icon="pi pi-plus" [rounded]="true" />
                 <p-iconfield>
-                    <!-- <i class="pi pi-search me-3"></i> -->
-                    <p-inputicon styleClass="pi pi-search" />
+                    <p-inputicon styleClass="pi pi-search " />
                     <input 
                         pInputText 
                         type="text" 
                         (input)="dt2.filterGlobal($any($event.target).value, 'contains')" 
                         placeholder="Search keyword"
+                        class="!text-black"
                     />
                 </p-iconfield>
-                
-                <!-- </div> -->
             </div>
         </ng-template>
         <ng-template #header>
