@@ -50,25 +50,25 @@
         </ng-template>
     </p-table>
     <p-dialog header="Ajout d'un nouveau client" styleClass="!w-[35%] !text-black" [modal]="true" [(visible)]="modal" >
-        <!-- <span class="p-text-secondary block">Update your information.</span> -->
-        <div class="flex flex-col items-center w-full gap-2">
-            <div class="w-[70%] flex flex-col gap-2">
-                <label for="email" class="text-black font-medium text-lg">Email:</label>
-                <input id="email"  placeholder="Email du client" pInputText class="!text-black !w-full" />
+        <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+            <div class="flex flex-col items-center w-full gap-2">
+                <div class="w-[70%] flex flex-col gap-2">
+                    <label for="email" class="text-black font-medium text-lg">Email:</label>
+                    <input id="email" formControlName="email" placeholder="Email du client" pInputText class="!text-black !w-full" />
+                </div>
+                <div class="w-[70%] flex flex-col gap-1">
+                    <label for="name" class="text-black font-medium text-lg">Nom:</label>
+                    <input id="name" formControlName="name" placeholder="Nom du client" pInputText class="!text-black !w-full" />
+                </div>
+                <div class="w-[70%] flex flex-col gap-1">
+                    <label for="firstName" class="text-black font-medium text-lg">Prénom:</label>
+                    <input id="firstName" formControlName="firstName" placeholder="Prénom du client" pInputText class="!text-black !w-full" />
+                </div>
             </div>
-            <div class="w-[70%] flex flex-col gap-1">
-                <label for="name" class="text-black font-medium text-lg">Nom:</label>
-                <input id="name" placeholder="Nom du client" pInputText class="!text-black !w-full" />
+            <div class="flex justify-end gap-2 mt-5">
+                <p-button label="Enregistrer" type="submit" />
+                <p-button label="Annuler" severity="secondary" (click)="modal = false" />
             </div>
-            <div class="w-[70%] flex flex-col gap-1">
-                <label for="firstName" class="text-black font-medium text-lg">Prénom:</label>
-                <input id="firstName" placeholder="Prénom du client" pInputText class="!text-black !w-full" />
-            </div>
-
-        </div>
-        <div class="flex justify-end gap-2 mt-5">
-            <p-button label="Enregistrer" (click)="modal = false" />
-            <p-button label="Annuller" severity="secondary" (click)="modal = false" />
-        </div>
+        </form>
     </p-dialog>
 </div>

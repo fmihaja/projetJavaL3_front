@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -7,6 +8,7 @@ import { InputIconModule } from 'primeng/inputicon';
 import { ButtonModule } from 'primeng/button';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { DialogModule } from 'primeng/dialog';
+import { ClientService } from '../../../service/client.service';
 
 @Component({
   selector: 'app-client',
@@ -14,31 +16,72 @@ import { DialogModule } from 'primeng/dialog';
     TableModule, InputTextModule,
     IconFieldModule, InputIconModule,
     ButtonModule, AutoFocusModule,
-    DialogModule, FloatLabelModule
+    DialogModule, FloatLabelModule,
+    ReactiveFormsModule
   ],
   templateUrl: './client.component.html',
   styleUrl: './client.component.css'
 })
-export class ClientComponent {
-  modal: boolean=false;
-  products=[
+export class ClientComponent implements OnInit {
+  modal: boolean = false;
+  products = [
     {
-      code:600,
-      name:"test",
-      category:"poids lourds",
-      quantity:500
+      code: 600,
+      name: "test",
+      category: "poids lourds",
+      quantity: 500
     },
     {
-      code:500,
-      name:"test3",
-      category:"poids leger",
-      quantity:600
+      code: 500,
+      name: "test3",
+      category: "poids leger",
+      quantity: 600
     },
     {
-      code:900,
-      name:"test5",
-      category:"aoids lourds",
-      quantity:700
+      code: 900,
+      name: "test5",
+      category: "aoids lourds",
+      quantity: 700
     },
-  ]
+  ];
+
+  clientForm: FormGroup;
+
+  constructor(private fb: FormBuilder, private clientService: ClientService) {
+    this.clientForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      name: ['', Validators.required],
+      firstName: ['', Validators.required]
+    });
+  }
+
+  ngOnInit(): void {}
+
+  onSubmit(): void {
+    if (this.clientForm.valid) {
+      this.clientService.insertClient(this.clientForm.value)      .subscribe({
+        next: (response) => {
+          console.log('Client ajouté avec succès', response);
+          this.modal = false;
+          
+          // Réinitialisation plus complète du formulaire
+          this.clientForm.reset();
+          this.clientForm.markAsPristine();
+          this.clientForm.markAsUntouched();
+
+          // Ajouter une notification utilisateur (ex: Snackbar)
+          // this.showSuccessNotification('Client créé avec succès');
+        },
+        error: (error) => {
+          console.error('Erreur lors de l\'ajout du client', error);
+          
+          // Gestion d'erreur améliorée
+          const errorMessage = error.error?.message || 'Erreur lors de la création du client';
+          console.log(errorMessage);
+          
+          // this.showErrorNotification(errorMessage);
+        }
+      });
+    }
+  }
 }

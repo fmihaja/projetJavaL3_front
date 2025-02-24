@@ -1,4 +1,4 @@
-interface apiResponse {
+export interface apiResponse {
     msg: string|null;
     data: any[]
 }
