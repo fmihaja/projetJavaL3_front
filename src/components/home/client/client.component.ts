@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TableModule } from 'primeng/table';
+import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -13,7 +14,7 @@ import { DialogModule } from 'primeng/dialog';
     TableModule, InputTextModule,
     IconFieldModule, InputIconModule,
     ButtonModule, AutoFocusModule,
-    DialogModule
+    DialogModule, FloatLabelModule
   ],
   templateUrl: './client.component.html',
   styleUrl: './client.component.css'
