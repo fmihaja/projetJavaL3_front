@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { apiResponse } from '../dto/apiResponse';
 import { Client } from '../dto/Client';
-// import Cliet
 
 @Injectable({
   providedIn: 'root'

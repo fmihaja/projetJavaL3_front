@@ -9,6 +9,8 @@ import { ButtonModule } from 'primeng/button';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { DialogModule } from 'primeng/dialog';
 import { ClientService } from '../../../service/client.service';
+import { Client } from '../../../dto/Client';
+import { apiResponse } from '../../../dto/apiResponse';
 
 @Component({
   selector: 'app-client',
@@ -24,26 +26,7 @@ import { ClientService } from '../../../service/client.service';
 })
 export class ClientComponent implements OnInit {
   modal: boolean = false;
-  products = [
-    {
-      code: 600,
-      name: "test",
-      category: "poids lourds",
-      quantity: 500
-    },
-    {
-      code: 500,
-      name: "test3",
-      category: "poids leger",
-      quantity: 600
-    },
-    {
-      code: 900,
-      name: "test5",
-      category: "aoids lourds",
-      quantity: 700
-    },
-  ];
+  clients: Client[] = []
 
   clientForm: FormGroup;
 
@@ -55,11 +38,20 @@ export class ClientComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.clientService.selectAll().subscribe({
+      next:(response: apiResponse)=>{
+        this.clients = response.data;
+      },
+      error:(error)=>{
+        console.error('Erreur lors de la récupération des clients', error);
+      }
+    })
+  }
 
   onSubmit(): void {
     if (this.clientForm.valid) {
-      this.clientService.insertClient(this.clientForm.value)      .subscribe({
+      this.clientService.insertClient(this.clientForm.value).subscribe({
         next: (response) => {
           console.log('Client ajouté avec succès', response);
           this.modal = false;
@@ -68,7 +60,14 @@ export class ClientComponent implements OnInit {
           this.clientForm.reset();
           this.clientForm.markAsPristine();
           this.clientForm.markAsUntouched();
-
+          this.clientService.selectAll().subscribe({
+            next:(response: apiResponse)=>{
+              this.clients = response.data;
+            },
+            error:(error)=>{
+              console.error('Erreur lors de la récupération des clients', error);
+            }
+          })
           // Ajouter une notification utilisateur (ex: Snackbar)
           // this.showSuccessNotification('Client créé avec succès');
         },
