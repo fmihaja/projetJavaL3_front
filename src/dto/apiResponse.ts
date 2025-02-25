@@ -1,6 +1,6 @@
-import { Client } from "./Client";
+import { Product } from "./Product";
 
 export interface apiResponse {
     msg: string|null;
-    data: Client | Client[] | null;
+    data: Product[]|Product|null;
 }

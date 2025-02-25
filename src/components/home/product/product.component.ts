@@ -9,14 +9,12 @@ import { ButtonModule } from 'primeng/button';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { DialogModule } from 'primeng/dialog';
 import { TabsModule } from 'primeng/tabs';
-
-import { ClientService } from '../../../service/client.service';
-import { Client } from '../../../dto/Client';
 import { apiResponse } from '../../../dto/apiResponse';
-import { Order } from '../../../dto/Order';
+import { ProductsService } from '../../../service/products.service';
+import { Product } from '../../../dto/Product';
 
 @Component({
-  selector: 'app-client',
+  selector: 'app-product',
   imports: [
     TableModule, InputTextModule,
     IconFieldModule, InputIconModule,
@@ -24,18 +22,18 @@ import { Order } from '../../../dto/Order';
     DialogModule, FloatLabelModule,
     ReactiveFormsModule, TabsModule
   ],
-  templateUrl: './client.component.html',
-  styleUrl: './client.component.css'
+  templateUrl: './product.component.html',
+  styleUrl: './product.component.css'
 })
-export class ClientComponent implements OnInit {
+export class ProductComponent implements OnInit {
   modalAdd: boolean = false;
   modalUpdate: boolean = false;
-  clients: Client[] = []
-  orders: Order[] = []; // Typage clair
+  products: Product[] = []
+  // orders: Order[] = []; // Typage clair
 
   clientForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private clientService: ClientService) {
+  constructor(private fb: FormBuilder, private productService: ProductsService) {
     this.clientForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       name: ['', Validators.required],
@@ -44,12 +42,12 @@ export class ClientComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.clientService.selectAll().subscribe({
+    this.productService.selectAll().subscribe({
       next:(response: apiResponse)=>{
         if (response.data != null && Array.isArray(response.data)) {
-          this.clients = response.data;
+          this.products = response.data;
         }
-        console.log(this.clients);
+        console.log(this.products);
       },
       error:(error)=>{
         console.error('Erreur lors de la récupération des clients', error);
@@ -59,7 +57,7 @@ export class ClientComponent implements OnInit {
 
   onSubmit(): void {
     if (this.clientForm.valid) {
-      this.clientService.insertClient(this.clientForm.value).subscribe({
+      this.productService.insertClient(this.clientForm.value).subscribe({
         next: (response) => {
           console.log('Client ajouté avec succès', response);
           this.modalAdd = false;
@@ -68,12 +66,12 @@ export class ClientComponent implements OnInit {
           this.clientForm.reset();
           this.clientForm.markAsPristine();
           this.clientForm.markAsUntouched();
-          this.clientService.selectAll().subscribe({
+          this.productService.selectAll().subscribe({
             next:(response: apiResponse)=>{
               if (response.data != null && Array.isArray(response.data)) {
-                this.clients = response.data;
+                this.products = response.data;
               }
-              console.log(this.clients);
+              console.log(this.products);
             },
             error:(error)=>{
               console.error('Erreur lors de la récupération des clients', error);
@@ -95,26 +93,4 @@ export class ClientComponent implements OnInit {
     }
   }
 
-  showClientOrder(client: Client): void {
-    this.modalUpdate=true
-    this.clientService.find(client).subscribe({
-      next:(response: apiResponse)=>{
-        // console.log(response);
-        const clientData = response.data as Client;
-        if (clientData != null && Array.isArray(clientData.orders)) {
-          if (clientData) {
-            this.orders = clientData.orders;
-            console.log(this.orders);
-            
-          }
-        }
-
-        // console.log(this.orders);
-      },
-      error:(error)=>{
-        console.error('Erreur lors de la récupération des clients', error);
-      }
-    })
-    // console.log('Affichage des commandes du client', email);
-  }
 }

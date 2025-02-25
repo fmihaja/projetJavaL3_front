@@ -1,0 +1,87 @@
+<div class="w-full mt-10 flex flex-col items-center gap-5">
+    <h1 class="text-6xl font-medium">Produit</h1>
+    <p-table 
+        #dt2
+        class="!w-[80%]" 
+        showGridlines 
+        [value]="products" 
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [globalFilterFields]="['id', 'name', 'price','quantite']"
+    >
+        <ng-template #caption>
+            <div class="flex justify-between items-center ">
+                <p-button icon="pi pi-plus" (click)="modalAdd=true" [rounded]="true" />
+                <p-iconfield>
+                    <p-inputicon styleClass="pi pi-search " />
+                    <input 
+                        pInputText 
+                        [pAutoFocus]="true" 
+                        type="text" 
+                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')" 
+                        placeholder="Search keyword"
+                        class="!text-black"
+                    />
+                </p-iconfield>
+            </div>
+        </ng-template>
+        <ng-template #header>
+            <tr class="">
+                <th class="!text-center !text-black !font-semibold" pSortableColumn="id">
+                    Identifiant<p-sortIcon field="id" />
+                </th>
+                <th class="!text-center !text-black !font-semibold" pSortableColumn="name">
+                    Nom<p-sortIcon field="name" />
+                </th>
+                <th class="!text-center !text-black !font-semibold" pSortableColumn="price">
+                    Price<p-sortIcon field="price" />
+                </th>
+                <th class="!text-center !text-black !font-semibold" pSortableColumn="quantite">
+                    Quantité<p-sortIcon field="quantite" />
+                </th>
+                <th class="!text-center !text-black !font-semibold !w-2">
+                    Button
+                </th>
+                <!-- <th pSortableColumn="quantity">
+                    Quantity<p-sortIcon field="quantity" />
+                </th> -->
+            </tr>
+        </ng-template>
+        <ng-template #body let-product>
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.quantite }}</td>
+                <td class="!flex !justify-center !gap-5">
+                    <p-button  icon="pi pi-shopping-cart" label="Commander"  />
+                    <p-button label="Supprimer" icon="pi pi-trash" severity="secondary" />
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <!-- ajout client -->
+    <p-dialog header="Ajout d'un nouveau client" styleClass="!w-[35%] !text-black" [modal]="true" [(visible)]="modalAdd" >
+        <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+            <div class="flex flex-col items-center w-full gap-2">
+                <div class="w-[70%] flex flex-col gap-2">
+                    <label for="email" class="text-black font-medium text-lg">Email:</label>
+                    <input id="email" formControlName="email" placeholder="Email du client" pInputText class="!text-black !w-full" />
+                </div>
+                <div class="w-[70%] flex flex-col gap-1">
+                    <label for="name" class="text-black font-medium text-lg">Nom:</label>
+                    <input id="name" formControlName="name" placeholder="Nom du client" pInputText class="!text-black !w-full" />
+                </div>
+                <div class="w-[70%] flex flex-col gap-1">
+                    <label for="firstName" class="text-black font-medium text-lg">Prénom:</label>
+                    <input id="firstName" formControlName="firstName" placeholder="Prénom du client" pInputText class="!text-black !w-full" />
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 mt-5">
+                <p-button [disabled]="clientForm.invalid" label="Enregistrer" type="submit" />
+                <p-button label="Annuler" severity="secondary" type="reset" (click)="modalAdd = false" />
+            </div>
+        </form>
+    </p-dialog>
+    <!-- commander une article -->
+</div>
