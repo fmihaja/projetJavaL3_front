@@ -3,6 +3,10 @@ import { ButtonModule } from 'primeng/button';
 import { ChartModule } from 'primeng/chart';
 import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectorRef, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { StockMovementSummary } from '../../../dto/StockMovementSummary';
+import { StockMovementService } from '../../../service/stock-movement.service';
+import { HttpClient } from '@angular/common/http';
+import { apiResponse } from '../../../dto/apiResponse';
 
 @Component({
   selector: 'app-index',
@@ -15,13 +19,22 @@ import { ChangeDetectorRef, OnInit, PLATFORM_ID, inject } from '@angular/core';
 export class IndexComponent implements OnInit {
   data: any;
   options: any;
+  stock: StockMovementSummary[] = [];
 
   platformId = inject(PLATFORM_ID);
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef, private stockMovementService: StockMovementService, private http: HttpClient) {}
 
   ngOnInit() {
     this.initChart();
+    this.stockMovementService.selectMonth().subscribe((response: apiResponse) => {
+      if (response.data!=null && response.data instanceof Array) {
+        this.stock = response.data as StockMovementSummary[];
+      }
+      console.log(this.stock);
+      
+      this.cd.markForCheck();
+    });
   }
 
   initChart() {
