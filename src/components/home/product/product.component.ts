@@ -58,9 +58,11 @@ export class ProductComponent implements OnInit {
 
   onSubmit(): void {
     if (this.clientForm.valid) {
-      this.productService.insertClient(this.clientForm.value).subscribe({
+      console.log(this.clientForm.value);
+      
+      this.productService.insert(this.clientForm.value).subscribe({
         next: (response) => {
-          console.log('Client ajouté avec succès', response);
+          console.log('Produit ajouté avec succès', response);
           this.modalAdd = false;
           
           // Réinitialisation plus complète du formulaire

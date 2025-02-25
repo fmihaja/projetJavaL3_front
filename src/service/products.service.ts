@@ -25,7 +25,7 @@ export class ProductsService {
     return this.http.put<apiResponse>(`${this.apiUrl}`, product);
   }
 
-  insertClient(product: Product): Observable<apiResponse> {
+  insert(product: Product): Observable<apiResponse> {
     return this.http.post<apiResponse>(`${this.apiUrl}`, product);
   }
 }
