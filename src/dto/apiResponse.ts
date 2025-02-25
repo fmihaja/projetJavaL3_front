@@ -1,4 +1,6 @@
+import { Client } from "./Client";
+
 export interface apiResponse {
     msg: string|null;
-    data: any[]
+    data: Client | Client[] | null;
 }

@@ -49,7 +49,7 @@
                 <td>{{ client.name }}</td>
                 <td>{{ client.firstName }}</td>
                 <td class="!flex !justify-center !gap-5">
-                    <p-button (click)="modalUpdate=true" icon="pi pi-shopping-cart" label="Commander"  />
+                    <p-button (click)="showClientOrder(client)" icon="pi pi-shopping-cart" label="Commander"  />
                     <p-button label="Supprimer" icon="pi pi-trash" severity="secondary" />
                 </td>
             </tr>
@@ -93,13 +93,12 @@
                     #dt3
                     class="!w-[80%]" 
                     showGridlines 
-                    [value]="clients" 
+                    [value]="orders || []" 
                     [tableStyle]="{ 'min-width': '50rem' }"
-                    [globalFilterFields]="['email', 'name', 'firstName']"
+                    [globalFilterFields]="['orderId', 'orderDate']"
                 >
                     <ng-template #caption>
-                        <div class="flex justify-between items-center ">
-                            <p-button icon="pi pi-plus" (click)="modalAdd=true" [rounded]="true" />
+                        <div class="flex justify-end ">
                             <p-iconfield>
                                 <p-inputicon styleClass="pi pi-search " />
                                 <input 
@@ -115,33 +114,35 @@
                     </ng-template>
                     <ng-template #header>
                         <tr class="">
-                            <th class="!text-center !text-black !font-semibold" pSortableColumn="email">
-                                Email<p-sortIcon field="email" />
+                            <th class="!text-center !text-black !font-semibold" pSortableColumn="orderId">
+                                Identifiants<p-sortIcon field="orderId" />
                             </th>
-                            <th class="!text-center !text-black !font-semibold" pSortableColumn="name">
-                                Nom<p-sortIcon field="name" />
+                            <th class="!text-center !text-black !font-semibold" pSortableColumn="orderDate">
+                                Date<p-sortIcon field="orderDate" />
                             </th>
-                            <th class="!text-center !text-black !font-semibold" pSortableColumn="firstName">
+                            <!-- <th class="!text-center !text-black !font-semibold" pSortableColumn="firstName">
                                 Prénom<p-sortIcon field="firstName" />
                             </th>
                             <th class="!text-center !text-black !font-semibold !w-2">
                                 Button
-                            </th>
+                            </th> -->
                             <!-- <th pSortableColumn="quantity">
                                 Quantity<p-sortIcon field="quantity" />
                             </th> -->
                         </tr>
                     </ng-template>
-                    <ng-template #body let-client>
-                        <tr>
-                            <td>{{ client.email }}</td>
-                            <td>{{ client.name }}</td>
-                            <td>{{ client.firstName }}</td>
-                            <td class="!flex !justify-center !gap-5">
-                                <p-button (click)="modalUpdate=true" icon="pi pi-shopping-cart" label="Commander"  />
-                                <p-button label="Supprimer" icon="pi pi-trash" severity="secondary" />
-                            </td>
-                        </tr>
+                    <ng-template #body let-order>
+                        @if (order!=[]){
+                            <tr>
+                                <td>{{ order.orderId }}</td>
+                                <td>{{ order.orderDate.reverse().join('/') }}</td>
+                                <td class="!flex !justify-center !gap-5">
+                                    <!-- <p-button (click)="showClientOrder(client)" icon="pi pi-shopping-cart" label="Commander"  /> -->
+                                    <p-button label="Supprimer" icon="pi pi-trash" severity="secondary" />
+                                </td>
+                            </tr>
+                        }
+
                     </ng-template>
                 </p-table>
                 </p-tabpanel>

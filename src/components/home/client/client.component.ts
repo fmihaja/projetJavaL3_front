@@ -13,6 +13,7 @@ import { TabsModule } from 'primeng/tabs';
 import { ClientService } from '../../../service/client.service';
 import { Client } from '../../../dto/Client';
 import { apiResponse } from '../../../dto/apiResponse';
+import { Order } from '../../../dto/Order';
 
 @Component({
   selector: 'app-client',
@@ -30,7 +31,7 @@ export class ClientComponent implements OnInit {
   modalAdd: boolean = false;
   modalUpdate: boolean = false;
   clients: Client[] = []
-  // order!: Client;
+  orders: Order[] = []; // Typage clair
 
   clientForm: FormGroup;
 
@@ -45,7 +46,9 @@ export class ClientComponent implements OnInit {
   ngOnInit(): void {
     this.clientService.selectAll().subscribe({
       next:(response: apiResponse)=>{
-        this.clients = response.data;
+        if (response.data != null && Array.isArray(response.data)) {
+          this.clients = response.data;
+        }
         console.log(this.clients);
       },
       error:(error)=>{
@@ -67,8 +70,10 @@ export class ClientComponent implements OnInit {
           this.clientForm.markAsUntouched();
           this.clientService.selectAll().subscribe({
             next:(response: apiResponse)=>{
-              this.clients = response.data;
-              
+              if (response.data != null && Array.isArray(response.data)) {
+                this.clients = response.data;
+              }
+              console.log(this.clients);
             },
             error:(error)=>{
               console.error('Erreur lors de la récupération des clients', error);
@@ -90,7 +95,26 @@ export class ClientComponent implements OnInit {
     }
   }
 
-  showClientOrder(email: String): void {
-    console.log('Affichage des commandes du client', email);
+  showClientOrder(client: Client): void {
+    this.modalUpdate=true
+    this.clientService.find(client).subscribe({
+      next:(response: apiResponse)=>{
+        // console.log(response);
+        const clientData = response.data as Client;
+        if (clientData != null && Array.isArray(clientData.orders)) {
+          if (clientData) {
+            this.orders = clientData.orders;
+            console.log(this.orders);
+            
+          }
+        }
+
+        // console.log(this.orders);
+      },
+      error:(error)=>{
+        console.error('Erreur lors de la récupération des clients', error);
+      }
+    })
+    // console.log('Affichage des commandes du client', email);
   }
 }

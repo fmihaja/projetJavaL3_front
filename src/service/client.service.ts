@@ -18,6 +18,10 @@ export class ClientService {
     return this.http.get<apiResponse>(`${this.apiUrl}`);
   }
 
+  find(client: Client): Observable<apiResponse>{
+    return this.http.get<apiResponse>(`${this.apiUrl}${client.email}`);
+  }
+
   updateClient(client: Client): Observable<apiResponse> {
     return this.http.put<apiResponse>(`${this.apiUrl}`, client);
   }
