@@ -26,6 +26,7 @@ import { apiResponse } from '../../../dto/apiResponse';
 })
 export class ClientComponent implements OnInit {
   modalAdd: boolean = false;
+  modalUpdate: boolean = false;
   clients: Client[] = []
 
   clientForm: FormGroup;
@@ -63,6 +64,8 @@ export class ClientComponent implements OnInit {
           this.clientService.selectAll().subscribe({
             next:(response: apiResponse)=>{
               this.clients = response.data;
+              console.log(response.data);
+              
             },
             error:(error)=>{
               console.error('Erreur lors de la récupération des clients', error);

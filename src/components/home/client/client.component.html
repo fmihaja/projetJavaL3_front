@@ -35,7 +35,7 @@
                 <th class="!text-center !text-black !font-semibold" pSortableColumn="firstName">
                     Prénom<p-sortIcon field="firstName" />
                 </th>
-                <th class="!text-center !text-black !font-semibold">
+                <th class="!text-center !text-black !font-semibold !w-2">
                     Button
                 </th>
                 <!-- <th pSortableColumn="quantity">
@@ -49,8 +49,8 @@
                 <td>{{ client.name }}</td>
                 <td>{{ client.firstName }}</td>
                 <td class="!flex !justify-center !gap-5">
-                    <p-button  label="Modifier"  />
-                    <p-button label="Supprimer" severity="secondary" />
+                    <p-button (click)="modalUpdate=true" icon="pi pi-shopping-cart" label="Commander"  />
+                    <p-button label="Supprimer" icon="pi pi-trash" severity="secondary" />
                 </td>
             </tr>
         </ng-template>
