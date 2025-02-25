@@ -26,15 +26,29 @@ export class IndexComponent implements OnInit {
   constructor(private cd: ChangeDetectorRef, private stockMovementService: StockMovementService, private http: HttpClient) {}
 
   ngOnInit() {
-    this.initChart();
     this.stockMovementService.selectMonth().subscribe((response: apiResponse) => {
       if (response.data!=null && response.data instanceof Array) {
         this.stock = response.data as StockMovementSummary[];
+        this.initChart();
+
       }
       console.log(this.stock);
       
       this.cd.markForCheck();
     });
+
+  }
+
+  getTotalSold(): number {
+    return this.stock
+      .filter(stock => stock.type.toUpperCase() === 'OUT')
+      .reduce((sum, current) => sum + Math.abs(current.quantite), 0);
+  }
+
+  getTotalBought(): number {
+    return this.stock
+      .filter(stock => stock.type.toUpperCase() === 'IN')
+      .reduce((sum, current) => sum + current.quantite, 0);
   }
 
   initChart() {
@@ -45,18 +59,18 @@ export class IndexComponent implements OnInit {
       const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color');
 
       this.data = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: [...new Set(this.stock.map(item => item.produitName))],
         datasets: [
           {
             label: 'Quantite vendus',
-            data: [65, 59, 80, 81, 56, 55, 40],
+            data: this.stock.filter((stock) => stock.type === 'OUT').map((stock) => stock.quantite),
             fill: false,
             borderColor: 'black',
             tension: 0.4
           },
           {
             label: 'Quantite achetés',
-            data: [28, 48, 40, 19, 86, 27, 90],
+            data: this.stock.filter((stock) => stock.type === 'IN').map((stock) => stock.quantite),
             fill: false,
             borderColor: documentStyle.getPropertyValue('--p-gray-500'),
             tension: 0.4

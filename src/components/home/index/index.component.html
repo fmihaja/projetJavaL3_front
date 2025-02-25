@@ -3,7 +3,7 @@
         <div class="w-full flex flex-col justify-start gap-4 ">
             <div class="text-black font-medium text-4xl text-center">Quantité Vendus</div>
             <div class="text-4xl  text-center">
-                10
+                {{ getTotalSold() }}
             </div>
         </div>
     </p-button>
@@ -11,7 +11,7 @@
         <div class="w-full  flex flex-col justify-start gap-4">
             <div class="text-black font-medium text-4xl text-center">Quantité Acheté</div>
             <div class="text-4xl text-center">
-                20
+                {{ getTotalBought() }}
             </div>
         </div>
     </p-button>
