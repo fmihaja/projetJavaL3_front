@@ -3,5 +3,5 @@ import { StockMovement } from "./StockMovement";
 
 export interface apiResponse {
     msg: string|null;
-    data: Product[] | Product | StockMovement | StockMovement[] |null;
+    data: Product[] | Product | StockMovement | StockMovement[] | StockMovementSummary |null;
 }

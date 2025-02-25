@@ -21,4 +21,7 @@ export class StockMovementService {
     return this.http.post<apiResponse>(`${this.apiUrl}`, stock);
   }
 
+  selectMonth(): Observable<apiResponse> {
+    return this.http.get<apiResponse>(`${this.apiUrl}month`);
+  }
 }
