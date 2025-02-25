@@ -53,7 +53,8 @@
                 <td>{{ product.price }}</td>
                 <td>{{ product.quantite }}</td>
                 <td class="!flex !justify-center !gap-5">
-                    <p-button  icon="pi pi-shopping-cart" label="Commander"  />
+                    <p-button icon="pi pi-plus" [rounded]="true" />
+                    <p-button icon="pi pi-minus" [rounded]="true" />
                     <p-button label="Supprimer" icon="pi pi-trash" severity="secondary" />
                 </td>
             </tr>
