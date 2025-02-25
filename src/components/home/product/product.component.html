@@ -10,7 +10,7 @@
     >
         <ng-template #caption>
             <div class="flex justify-between items-center ">
-                <p-button icon="pi pi-plus" (click)="modalAdd=true" [rounded]="true" />
+                <p-button label="Ajout" icon="pi pi-plus" (click)="modalAdd=true" [rounded]="true" />
                 <p-iconfield>
                     <p-inputicon styleClass="pi pi-search " />
                     <input 
@@ -62,20 +62,20 @@
     </p-table>
 
     <!-- ajout client -->
-    <p-dialog header="Ajout d'un nouveau client" styleClass="!w-[35%] !text-black" [modal]="true" [(visible)]="modalAdd" >
+    <p-dialog header="Ajout d'un nouveau Produit" styleClass="!w-[35%] !text-black" [modal]="true" [(visible)]="modalAdd" >
         <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
             <div class="flex flex-col items-center w-full gap-2">
                 <div class="w-[70%] flex flex-col gap-2">
-                    <label for="email" class="text-black font-medium text-lg">Email:</label>
-                    <input id="email" formControlName="email" placeholder="Email du client" pInputText class="!text-black !w-full" />
+                    <label for="email" class="text-black font-medium text-lg">Nom:</label>
+                    <input id="email" formControlName="name" placeholder="Nom du produit" pInputText class="!text-black !w-full" />
                 </div>
                 <div class="w-[70%] flex flex-col gap-1">
-                    <label for="name" class="text-black font-medium text-lg">Nom:</label>
-                    <input id="name" formControlName="name" placeholder="Nom du client" pInputText class="!text-black !w-full" />
+                    <label for="name" class="text-black font-medium text-lg">Prix:</label>
+                    <input id="name" formControlName="price" placeholder="Prix du produit" pInputText class="!text-black !w-full" />
                 </div>
                 <div class="w-[70%] flex flex-col gap-1">
-                    <label for="firstName" class="text-black font-medium text-lg">Prénom:</label>
-                    <input id="firstName" formControlName="firstName" placeholder="Prénom du client" pInputText class="!text-black !w-full" />
+                    <label for="firstName" class="text-black font-medium text-lg">Quantite:</label>
+                    <input id="firstName" formControlName="quantite" placeholder="Quantité du produit" pInputText class="!text-black !w-full" />
                 </div>
             </div>
             <div class="flex justify-end gap-2 mt-5">

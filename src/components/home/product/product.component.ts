@@ -35,9 +35,10 @@ export class ProductComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private productService: ProductsService) {
     this.clientForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      name: ['', Validators.required],
-      firstName: ['', Validators.required]
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      price: ['', [Validators.required, Validators.min(5000), Validators.pattern('^[0-9]*$')]],
+      quantite: ['', [Validators.required, Validators.min(1), , Validators.pattern('^[0-9]*$')]],
+
     });
   }
 
