@@ -1,4 +1,4 @@
-interface StockMovementSummary {
+export interface StockMovementSummary {
     quantite: number;
     produitId: number;
     produitName: string;

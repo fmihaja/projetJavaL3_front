@@ -1,5 +1,6 @@
 import { Product } from "./Product";
 import { StockMovement } from "./StockMovement";
+import { StockMovementSummary } from "./StockMovementSummary";
 
 export interface apiResponse {
     msg: string|null;
