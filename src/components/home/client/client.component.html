@@ -25,15 +25,18 @@
             </div>
         </ng-template>
         <ng-template #header>
-            <tr class="!text-black !font-semibold">
-                <th pSortableColumn="email">
-                    email<p-sortIcon field="email" />
+            <tr class="">
+                <th class="!text-center !text-black !font-semibold" pSortableColumn="email">
+                    Email<p-sortIcon field="email" />
                 </th>
-                <th pSortableColumn="name">
+                <th class="!text-center !text-black !font-semibold" pSortableColumn="name">
                     Nom<p-sortIcon field="name" />
                 </th>
-                <th pSortableColumn="firstName">
+                <th class="!text-center !text-black !font-semibold" pSortableColumn="firstName">
                     Prénom<p-sortIcon field="firstName" />
+                </th>
+                <th class="!text-center !text-black !font-semibold">
+                    Button
                 </th>
                 <!-- <th pSortableColumn="quantity">
                     Quantity<p-sortIcon field="quantity" />
@@ -45,7 +48,10 @@
                 <td>{{ client.email }}</td>
                 <td>{{ client.name }}</td>
                 <td>{{ client.firstName }}</td>
-                <!-- <td>{{ product.quantity }}</td> -->
+                <td class="!flex !justify-center !gap-5">
+                    <p-button  label="Modifier"  />
+                    <p-button label="Supprimer" severity="secondary" />
+                </td>
             </tr>
         </ng-template>
     </p-table>
@@ -67,7 +73,7 @@
             </div>
             <div class="flex justify-end gap-2 mt-5">
                 <p-button [disabled]="clientForm.invalid" label="Enregistrer" type="submit" />
-                <p-button label="Annuler" severity="secondary" (click)="modal = false" />
+                <p-button label="Annuler" severity="secondary" type="reset" (click)="modal = false" />
             </div>
         </form>
     </p-dialog>
