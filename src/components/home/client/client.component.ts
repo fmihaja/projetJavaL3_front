@@ -25,7 +25,7 @@ import { apiResponse } from '../../../dto/apiResponse';
   styleUrl: './client.component.css'
 })
 export class ClientComponent implements OnInit {
-  modal: boolean = false;
+  modalAdd: boolean = false;
   clients: Client[] = []
 
   clientForm: FormGroup;
@@ -54,7 +54,7 @@ export class ClientComponent implements OnInit {
       this.clientService.insertClient(this.clientForm.value).subscribe({
         next: (response) => {
           console.log('Client ajouté avec succès', response);
-          this.modal = false;
+          this.modalAdd = false;
           
           // Réinitialisation plus complète du formulaire
           this.clientForm.reset();
