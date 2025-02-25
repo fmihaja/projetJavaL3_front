@@ -8,6 +8,8 @@ import { InputIconModule } from 'primeng/inputicon';
 import { ButtonModule } from 'primeng/button';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { DialogModule } from 'primeng/dialog';
+import { TabsModule } from 'primeng/tabs';
+
 import { ClientService } from '../../../service/client.service';
 import { Client } from '../../../dto/Client';
 import { apiResponse } from '../../../dto/apiResponse';
@@ -19,7 +21,7 @@ import { apiResponse } from '../../../dto/apiResponse';
     IconFieldModule, InputIconModule,
     ButtonModule, AutoFocusModule,
     DialogModule, FloatLabelModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, TabsModule
   ],
   templateUrl: './client.component.html',
   styleUrl: './client.component.css'
@@ -28,6 +30,7 @@ export class ClientComponent implements OnInit {
   modalAdd: boolean = false;
   modalUpdate: boolean = false;
   clients: Client[] = []
+  // order!: Client;
 
   clientForm: FormGroup;
 
@@ -43,7 +46,7 @@ export class ClientComponent implements OnInit {
     this.clientService.selectAll().subscribe({
       next:(response: apiResponse)=>{
         this.clients = response.data;
-        console.log(response.data);
+        console.log(this.clients);
       },
       error:(error)=>{
         console.error('Erreur lors de la récupération des clients', error);
@@ -85,5 +88,9 @@ export class ClientComponent implements OnInit {
         }
       });
     }
+  }
+
+  showClientOrder(email: String): void {
+    console.log('Affichage des commandes du client', email);
   }
 }

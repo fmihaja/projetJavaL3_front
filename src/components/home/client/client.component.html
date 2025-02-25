@@ -80,13 +80,82 @@
         </form>
     </p-dialog>
     <!-- commander une article -->
-    <p-dialog header="Commande" styleClass="!w-[35%] !text-black" [modal]="true" [(visible)]="modalUpdate" >
-        <form >
+    <p-dialog header="Commande" styleClass="!w-fit !min-w-[35%] !text-black" [modal]="true" [(visible)]="modalUpdate" >
+        <p-tabs value="0">
+            <p-tablist>
+                <p-tab value="0"> <i class="pi pi-shopping-cart"></i> Liste</p-tab>
+                <p-tab value="1"> <i class="pi pi-plus"></i> Ajouter</p-tab>
+                <!-- <p-tab value="2">Header III</p-tab> -->
+            </p-tablist>
+            <p-tabpanels>
+                <p-tabpanel value="0">
+                    <p-table 
+                    #dt3
+                    class="!w-[80%]" 
+                    showGridlines 
+                    [value]="clients" 
+                    [tableStyle]="{ 'min-width': '50rem' }"
+                    [globalFilterFields]="['email', 'name', 'firstName']"
+                >
+                    <ng-template #caption>
+                        <div class="flex justify-between items-center ">
+                            <p-button icon="pi pi-plus" (click)="modalAdd=true" [rounded]="true" />
+                            <p-iconfield>
+                                <p-inputicon styleClass="pi pi-search " />
+                                <input 
+                                    pInputText 
+                                    [pAutoFocus]="true" 
+                                    type="text" 
+                                    (input)="dt3.filterGlobal($any($event.target).value, 'contains')" 
+                                    placeholder="Search keyword"
+                                    class="!text-black"
+                                />
+                            </p-iconfield>
+                        </div>
+                    </ng-template>
+                    <ng-template #header>
+                        <tr class="">
+                            <th class="!text-center !text-black !font-semibold" pSortableColumn="email">
+                                Email<p-sortIcon field="email" />
+                            </th>
+                            <th class="!text-center !text-black !font-semibold" pSortableColumn="name">
+                                Nom<p-sortIcon field="name" />
+                            </th>
+                            <th class="!text-center !text-black !font-semibold" pSortableColumn="firstName">
+                                Prénom<p-sortIcon field="firstName" />
+                            </th>
+                            <th class="!text-center !text-black !font-semibold !w-2">
+                                Button
+                            </th>
+                            <!-- <th pSortableColumn="quantity">
+                                Quantity<p-sortIcon field="quantity" />
+                            </th> -->
+                        </tr>
+                    </ng-template>
+                    <ng-template #body let-client>
+                        <tr>
+                            <td>{{ client.email }}</td>
+                            <td>{{ client.name }}</td>
+                            <td>{{ client.firstName }}</td>
+                            <td class="!flex !justify-center !gap-5">
+                                <p-button (click)="modalUpdate=true" icon="pi pi-shopping-cart" label="Commander"  />
+                                <p-button label="Supprimer" icon="pi pi-trash" severity="secondary" />
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                </p-tabpanel>
+                <p-tabpanel value="1">
+                    <form >
 
-            <div class="flex justify-end gap-2 mt-5">
-                <p-button label="Enregistrer" type="submit" />
-                <p-button label="Annuler" severity="secondary" type="reset" (click)="modalUpdate = false" />
-            </div>
-        </form>
+                        <div class="flex justify-end gap-2 mt-5">
+                            <p-button label="Enregistrer" type="submit" />
+                            <p-button label="Annuler" severity="secondary" type="reset" (click)="modalUpdate = false" />
+                        </div>
+                    </form>
+                </p-tabpanel>
+            </p-tabpanels>
+        </p-tabs>
+
     </p-dialog>
 </div>
