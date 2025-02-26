@@ -10,6 +10,7 @@ import { AutoFocusModule } from 'primeng/autofocus';
 import { DialogModule } from 'primeng/dialog';
 import { TabsModule } from 'primeng/tabs';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { apiResponse } from '../../../dto/apiResponse';
 import { ProductsService } from '../../../service/products.service';
@@ -26,6 +27,7 @@ import { StockMovementService } from '../../../service/stock-movement.service';
     DialogModule, FloatLabelModule, ConfirmPopupModule,
     ReactiveFormsModule, TabsModule, FormsModule
   ],
+  providers: [ConfirmationService, MessageService],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
@@ -41,7 +43,7 @@ export class ProductComponent implements OnInit {
 
   clientForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private productService: ProductsService, private stockMovementService: StockMovementService) {
+  constructor(private confirmationService: ConfirmationService, private messageService: MessageService, private fb: FormBuilder, private productService: ProductsService, private stockMovementService: StockMovementService) {
     this.clientForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       price: ['', [Validators.required, Validators.min(5000), Validators.pattern('^[0-9]*$')]],
@@ -150,27 +152,71 @@ export class ProductComponent implements OnInit {
     })
   }
 
-  deleteProduct(product: Product){
-    this.productService.delete(product).subscribe({
-      next:(response: apiResponse)=>{
-        console.log(response);
-        this.productService.selectAll().subscribe({
+  // deleteProduct(product: Product){
+  //   this.productService.delete(product).subscribe({
+  //     next:(response: apiResponse)=>{
+  //       console.log(response);
+  //       this.productService.selectAll().subscribe({
+  //         next:(response: apiResponse)=>{
+  //           if (response.data != null && Array.isArray(response.data)) {
+  //             this.products = response.data as Product[];
+  //         }
+  //           console.log(this.products);
+  //         },
+  //         error:(error)=>{
+  //           console.error('Erreur lors de la récupération des clients', error);
+  //         }
+  //       })
+  //     },
+  //     error:(error)=>{
+  //       console.error('Erreur lors de suppréssion', error);
+  //     }
+  //   })
+  // }
+  
+  deleteProduct(event: Event, product: Product) {
+    this.confirmationService.confirm({
+        target: event.target as EventTarget,
+        message: 'Voulez vous supprimez ce produit?',
+        icon: 'pi pi-info-circle',
+        rejectButtonProps: {
+            label: 'Cancel',
+            severity: 'secondary',
+            outlined: true
+        },
+        acceptButtonProps: {
+            label: 'Oui',
+            severity: 'danger'
+        },
+        accept: () => {
+        this.productService.delete(product).subscribe({
           next:(response: apiResponse)=>{
-            if (response.data != null && Array.isArray(response.data)) {
-              this.products = response.data as Product[];
-          }
-            console.log(this.products);
+            console.log(response);
+            this.productService.selectAll().subscribe({
+              next:(response: apiResponse)=>{
+                if (response.data != null && Array.isArray(response.data)) {
+                  this.products = response.data as Product[];
+              }
+                console.log(this.products);
+              },
+              error:(error)=>{
+                console.error('Erreur lors de la récupération des clients', error);
+              }
+            })
           },
           error:(error)=>{
-            console.error('Erreur lors de la récupération des clients', error);
+            this.messageService.add({ severity: 'error', summary: 'Erreur du serveur', detail: 'L\'operation a échoué', life: 3000 });
+            console.error('Erreur lors de suppréssion', error);
+          },
+          complete: () => {
+            this.messageService.add({ severity: 'info', summary: 'Suppresion', detail: `Le produit avec l'identifiant ${product.id}} a été supprimé`, life: 3000 });
           }
         })
-      },
-      error:(error)=>{
-        console.error('Erreur lors de suppréssion', error);
-      }
-    })
-  }
-  
+        },
+        reject: () => {
+            this.messageService.add({ severity: 'error', summary: 'Annulation', detail: 'Suppréssion annuler', life: 3000 });
+        }
+    });
+}
 
 }

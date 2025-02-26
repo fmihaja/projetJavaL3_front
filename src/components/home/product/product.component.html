@@ -54,8 +54,9 @@
                 <td>{{ product.quantite }}</td>
                 <td class="!flex !justify-center !gap-5">
                     <p-button icon="pi pi-plus" (click)="showModalUpdate('IN', product)" [rounded]="true" />
-                    <p-button icon="pi pi-minus" (click)="showModalUpdate('OUT', product)" [rounded]="true" />
-                    <p-button label="Supprimer" icon="pi pi-trash" severity="secondary" />
+                    <p-button icon="pi pi-minus" (click)="showModalUpdate('OUT', product)" [rounded]="true"></p-button>
+                    <p-confirmpopup />
+                    <p-button label="Supprimer" icon="pi pi-trash" severity="secondary" (click)="deleteProduct($event, product)"/>                
                 </td>
             </tr>
         </ng-template>
