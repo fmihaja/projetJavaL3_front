@@ -28,4 +28,8 @@ export class ProductsService {
   insert(product: Product): Observable<apiResponse> {
     return this.http.post<apiResponse>(`${this.apiUrl}`, product);
   }
+
+  delete(product: Product): Observable<apiResponse> {
+    return this.http.delete<apiResponse>(`${this.apiUrl+product.id}`)
+  }
 }

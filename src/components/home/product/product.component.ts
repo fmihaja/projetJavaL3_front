@@ -9,6 +9,8 @@ import { ButtonModule } from 'primeng/button';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { DialogModule } from 'primeng/dialog';
 import { TabsModule } from 'primeng/tabs';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+
 import { apiResponse } from '../../../dto/apiResponse';
 import { ProductsService } from '../../../service/products.service';
 import { Product } from '../../../dto/Product';
@@ -21,7 +23,7 @@ import { StockMovementService } from '../../../service/stock-movement.service';
     TableModule, InputTextModule,
     IconFieldModule, InputIconModule,
     ButtonModule, AutoFocusModule,
-    DialogModule, FloatLabelModule,
+    DialogModule, FloatLabelModule, ConfirmPopupModule,
     ReactiveFormsModule, TabsModule, FormsModule
   ],
   templateUrl: './product.component.html',
@@ -33,7 +35,7 @@ export class ProductComponent implements OnInit {
   products: Product[] = []
   stockMovement: StockMovement[] =[];
   titleModal!: string;
-  product!: Product;
+  productSelect!: Product;
   quantity!: number;
   // orders: Order[] = []; // Typage clair
 
@@ -105,7 +107,7 @@ export class ProductComponent implements OnInit {
   showModalUpdate(title: string, product: Product): void {
     this.modalUpdate=true;
     this.titleModal=title;
-    this.product=product;
+    this.productSelect=product;
   }
 
   createStock(product: Product, type: string, quantity: number): void {
@@ -147,4 +149,28 @@ export class ProductComponent implements OnInit {
       }
     })
   }
+
+  deleteProduct(product: Product){
+    this.productService.delete(product).subscribe({
+      next:(response: apiResponse)=>{
+        console.log(response);
+        this.productService.selectAll().subscribe({
+          next:(response: apiResponse)=>{
+            if (response.data != null && Array.isArray(response.data)) {
+              this.products = response.data as Product[];
+          }
+            console.log(this.products);
+          },
+          error:(error)=>{
+            console.error('Erreur lors de la récupération des clients', error);
+          }
+        })
+      },
+      error:(error)=>{
+        console.error('Erreur lors de suppréssion', error);
+      }
+    })
+  }
+  
+
 }
